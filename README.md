@@ -1,4 +1,4 @@
-# mbta-gtfs-onboarding
+# gtfs_onboarding
 
 View on [Binder](https://mybinder.org/v2/gh/mbta/gtfs_onboarding/main?urlpath=lab/tree/GTFS_Onboarding.ipynb)
 
