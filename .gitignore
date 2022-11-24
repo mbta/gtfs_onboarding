@@ -1,0 +1,5 @@
+/.direnv/
+.ipynb_checkpoints
+.jupyter
+feed
+feed.db
