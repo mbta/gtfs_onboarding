@@ -41,7 +41,24 @@
 				"x86_64-linux"
 			];
 
-			perSystem = { system, pkgs, self', inputs', ... }: {
+			perSystem = { system, pkgs, lib, self', inputs', ... }: {
+				apps.interactive-read-only = let
+					notebook_dir = pkgs.symlinkJoin {
+						name = "notebook-work-dir";
+						paths = [
+							self
+						];
+						postBuild = "ln -s ${self'.packages.gtfs-db} $out/feed.db";
+					};
+				in {
+					type = "app";
+					program = pkgs.writeShellApplication {
+						name = "test";
+						text = lib.concatStringsSep "\n" [
+							"${self'.packages.default}/bin/${self'.packages.default.meta.mainProgram} --notebook-dir=${notebook_dir}"
+						];
+					};
+				};
 				packages.default = self'.packages.lab;
 
 				devshells.default = {
