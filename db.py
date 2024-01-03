@@ -40,7 +40,12 @@ DATA_TYPES = {
 def cli():
     pass
 
+@cli.command()
+@click.argument('gtfs_path', type=click.Path(dir_okay=True, file_okay=False, exists=True))
+@click.argument('db_path', type=click.Path(dir_okay=False, file_okay=True))
 def create_db(gtfs_path, db_path):
+    """Generate a SQLite3 database at DB_PATH from the GTFS data at GTFS_PATH
+    """
     import glob
 
     with sqlite3.connect(db_path) as conn:
