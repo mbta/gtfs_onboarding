@@ -75,6 +75,9 @@
 						}))
 						ps.pandas
 						ps.requests
+
+						ps.scipy
+						ps.matplotlib
 					]);
 			};
 		};
