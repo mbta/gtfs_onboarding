@@ -1,4 +1,5 @@
 from logging import basicConfig, info, debug, warn, DEBUG
+import click
 import json
 
 import os
@@ -34,6 +35,10 @@ EXAMPLE_FEED_URL = "https://cdn.mbtace.com/archive/20201002.zip"
 DATA_TYPES = {
     "stop_sequence": "int"
 }
+
+@click.group()
+def cli():
+    pass
 
 def create_db(gtfs_path, db_path):
     import glob
@@ -88,7 +93,15 @@ def download_gtfs(gtfs_feed_zip_url=EXAMPLE_FEED_URL, out_folder="feed"):
     zip = ZipFile(io.BytesIO(res.content), "r")
     zip.extractall(out_folder)
 
+
+@cli.command()
+@click.argument('gtfs_feed_zip_url', type=click.STRING)
+@click.argument('out_folder', type=click.Path())
 def load_db(gtfs_feed_zip_url=EXAMPLE_FEED_URL, out_folder="feed"):
+    """Download GTFS_FEED_ZIP_URL to OUT_FOLDER
+
+    Generate a sqlite3 database named "$OUT_FOLDER".db
+    """
     download_gtfs(gtfs_feed_zip_url, out_folder)
 
     db_path = out_folder + ".db"
@@ -97,12 +110,8 @@ def load_db(gtfs_feed_zip_url=EXAMPLE_FEED_URL, out_folder="feed"):
 
     create_db(out_folder, db_path)
 
-if __name__ == '__main__':
-    import sys
 
+if __name__ == '__main__':
     basicConfig(level=DEBUG, style="{", format='{asctime} {levelname:>8} {module:>6}:{funcName:<15} {message}')
 
-    try:
-        load_db(sys.argv[1])
-    except IndexError:
-        load_db(EXAMPLE_FEED_URL)
+    cli()

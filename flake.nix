@@ -115,6 +115,8 @@
 
 						ps.scipy
 						ps.matplotlib
+
+						ps.click
 					]);
 			};
 		};
