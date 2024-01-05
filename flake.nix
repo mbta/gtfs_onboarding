@@ -37,7 +37,7 @@
 			];
 
 			perSystem = { system, pkgs, self', inputs', ... }: {
-				packages.default = self'.packages.jupyterlab;
+				packages.default = self'.packages.lab;
 
 				devshells.default = {
 					packages = [
@@ -48,16 +48,31 @@
 					];
 				};
 
-				packages.jupyterlab = self'.legacyPackages.jupyterlabconfig.config.build;
+				packages.lab = self'.legacyPackages.jupyterlab.config.build;
+				packages.lab-python = self'.legacyPackages.jupyterlab-python.config.build;
 
-				legacyPackages.jupyterlabconfig = inputs.jupyterWith.lib.${system}.mkJupyterlabEval ({...}: {
-					nixpkgs = pkgs;
+				legacyPackages.jupyterWithModules.pkgs = { nixpkgs = pkgs; };
 
+				legacyPackages.jupyterWithModules.python = {
 					kernel.python.default = {
 						enable = true;
 						displayName = "Python3 Kernel";
 						env = self'.packages.python;
 					};
+				};
+
+				legacyPackages.jupyterlab = inputs.jupyterWith.lib.${system}.mkJupyterlabEval ({
+					imports = [
+						self'.legacyPackages.jupyterWithModules.pkgs
+						self'.legacyPackages.jupyterWithModules.python
+					];
+				});
+
+				legacyPackages.jupyterlab-python = inputs.jupyterWith.lib.${system}.mkJupyterlabEval ({
+					imports = [
+						self'.legacyPackages.jupyterWithModules.pkgs
+						self'.legacyPackages.jupyterWithModules.python
+					];
 				});
 
 				packages.python = pkgs.python3.withPackages (ps:
