@@ -41,8 +41,9 @@
 
 				devshells.default = {
 					packages = [
+						self'.packages.python
+
 						pkgs.sqlite
-						self'.packages.jupyterlab
 
 						pkgs.nil
 					];
