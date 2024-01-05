@@ -1,11 +1,33 @@
-import sqlite3
-import io
+from logging import basicConfig, info, debug, warn, DEBUG
+import json
+
 import os
-import sys
-from zipfile import ZipFile
-import requests
-import glob
+
+import sqlite3
 import csv
+
+from timeit import default_timer as timer
+from datetime import timedelta
+
+class Encoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, set):
+            return tuple(o)
+        elif isinstance(o, str):
+            return o.encode('unicode_escape').decode('ascii')
+        return super().default(o)
+
+class StructuredMessage:
+    def __init__(self, message, /, **kwargs):
+        self.message = message
+        self.kwargs = kwargs
+
+    def __str__(self):
+        e = Encoder()
+        s = " ".join([f"{k}={e.encode(v)}" for k,v in self.kwargs.items()])
+        return f'{self.message:>24} >>> {s}'
+
+_ = StructuredMessage   # optional, to improve readability
 
 EXAMPLE_FEED_URL = "https://cdn.mbtace.com/archive/20201002.zip"
 
@@ -13,32 +35,73 @@ DATA_TYPES = {
     "stop_sequence": "int"
 }
 
-def load_db(gtfs_feed_zip_url):
-    if os.path.exists("feed.db"):
-        os.remove("feed.db")
+def create_db(gtfs_path, db_path):
+    import glob
+
+    with sqlite3.connect(db_path) as conn:
+        info(_("connected to database", db_path=db_path))
+        cursor = conn.cursor()
+
+
+        info(_("reading gtfs files", path=gtfs_path))
+        for file in glob.glob("*.txt", root_dir=gtfs_path):
+            print()
+            debug(_("reading gtfs file", filename=file))
+
+            (table, ext) = os.path.splitext(os.path.basename(file))
+            assert ext == ".txt"
+
+
+            start, end = None, None
+            with open(os.path.join(gtfs_path, file)) as csv_file:
+                csvreader = csv.DictReader(csv_file)
+
+                start = timer()
+                populate_db(table, csvreader, cursor)
+                end = timer()
+
+            info(_("committing table", table=table, duration=str(timedelta(seconds=end-start) / timedelta(milliseconds=1)) + "ms"))
+            conn.commit()
+
+
+def populate_db(table_name, csv_reader: csv.DictReader, db_cursor: sqlite3.Cursor):
+    keys = csv_reader.fieldnames
+    fields = ", ".join([(key + " " + DATA_TYPES.get(key, "text")) for key in keys])
+
+    debug(_("creating table", table=table_name))
+    db_cursor.execute(f"CREATE TABLE {table_name} ({fields})")
+
+
+    values = [[value for value in row.values()] for row in csv_reader]
+
+    debug(_("inserting data", table=table_name))
+    db_cursor.executemany(
+        f"INSERT INTO {table_name} VALUES ({','.join(['?' for _ in keys])})", values
+    )
+
+def download_gtfs(gtfs_feed_zip_url=EXAMPLE_FEED_URL, out_folder="feed"):
+    import io
+    import requests
+    from zipfile import ZipFile
+
     res = requests.get(gtfs_feed_zip_url)
     zip = ZipFile(io.BytesIO(res.content), "r")
-    zip.extractall("feed")
-    conn = sqlite3.connect('feed.db')
-    c = conn.cursor()
+    zip.extractall(out_folder)
 
-    for file in glob.glob("feed/*.txt"):
-        table = file.split("feed/")[1].split(".")[0]
-        with open(file) as csv_file:
-            csvreader = csv.DictReader(csv_file)
-            keys = csvreader.fieldnames
-            fields = ", ".join([(key + " " + DATA_TYPES.get(key, "text")) for key in keys])
-            c.execute(f"CREATE TABLE {table} ({fields})")
-            values = [[v for v in row.values()] for row in csvreader]
-            c.executemany(
-                f"INSERT INTO {table} VALUES ({','.join(['?' for key in keys])})", values
-            )
-    conn.commit()
+def load_db(gtfs_feed_zip_url=EXAMPLE_FEED_URL, out_folder="feed"):
+    download_gtfs(gtfs_feed_zip_url, out_folder)
 
-    conn.close()
+    db_path = out_folder + ".db"
+    if os.path.exists(db_path):
+        os.remove(db_path)
 
+    create_db(out_folder, db_path)
 
 if __name__ == '__main__':
+    import sys
+
+    basicConfig(level=DEBUG, style="{", format='{asctime} {levelname:>8} {module:>6}:{funcName:<15} {message}')
+
     try:
         load_db(sys.argv[1])
     except IndexError:
