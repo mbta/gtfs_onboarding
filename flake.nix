@@ -22,6 +22,10 @@
 	inputs.jupyterWith.inputs.nixpkgs.follows = "/nixpkgs";
 	inputs.jupyterWith.inputs.nixpkgs-stable.follows = "/nixpkgs";
 
+	inputs.sqlite-notebook.url = "github:firestack/sqlite-notebook/feat/jupyter-with-module";
+	inputs.sqlite-notebook.inputs.nixpkgs.follows = "/nixpkgs";
+	inputs.sqlite-notebook.inputs.flake-utils.follows = "/jupyterWith/flake-utils";
+
 	outputs = inputs@{ self, flake-parts, jupyterWith, devshell, ... }:
 		flake-parts.lib.mkFlake { inherit inputs; } {
 			imports = [
@@ -50,6 +54,7 @@
 				};
 
 				packages.lab = self'.legacyPackages.jupyterlab.config.build;
+				packages.lab-sqlite = self'.legacyPackages.jupyterlab-sqlite.config.build;
 				packages.lab-python = self'.legacyPackages.jupyterlab-python.config.build;
 
 				legacyPackages.jupyterWithModules.pkgs = { nixpkgs = pkgs; };
@@ -62,10 +67,19 @@
 					};
 				};
 
+				legacyPackages.jupyterWithModules.sqlite = {
+					imports = [
+						inputs.sqlite-notebook.jupyterWithModules.${system}.default
+					];
+
+					kernel.sqlite.default.enable = true;
+				};
+
 				legacyPackages.jupyterlab = inputs.jupyterWith.lib.${system}.mkJupyterlabEval ({
 					imports = [
 						self'.legacyPackages.jupyterWithModules.pkgs
 						self'.legacyPackages.jupyterWithModules.python
+						self'.legacyPackages.jupyterWithModules.sqlite
 					];
 				});
 
@@ -73,6 +87,13 @@
 					imports = [
 						self'.legacyPackages.jupyterWithModules.pkgs
 						self'.legacyPackages.jupyterWithModules.python
+					];
+				});
+
+				legacyPackages.jupyterlab-sqlite = inputs.jupyterWith.lib.${system}.mkJupyterlabEval ({
+					imports = [
+						self'.legacyPackages.jupyterWithModules.pkgs
+						self'.legacyPackages.jupyterWithModules.sqlite
 					];
 				});
 
