@@ -32,13 +32,20 @@ Using nix, we can start the JupyterLab and notebook with a single command.
 nix run github:firestack/gtfs_onboarding.nix#interactive-read-only
 ```
 
-This command shall download the repository into the nix store, then build the jupyter lab and kernels needed.
 
-Simultaneously, it'll download the associated GTFS data and create a SQLite3 database from the data.
 
-Then, nix will run a command which starts `jupyter-lab` in a directory containing the notebooks, associated data, and the GTFS SQLite database.
-
-Then continue with the [section: opening the notebook](#opening-the-notebook).
+This command does the following:
+1. Runs the nix flake app named `interactive-read-only` which
+	1. downloads the [flake repository](https://github.com/firestack/gtfs_onboarding.nix)
+		into the nix store then:
+		- builds the jupyter lab and kernels needed.
+		- downloads the associated GTFS data and:
+			- creates a SQLite3 database using the downloaded 
+				GTFS data.
+	1. starts `jupyter-lab` in a directory containing:
+		- the notebooks and associated data.
+		- the GTFS SQLite database.
+1. next, follow the instructions in the [section: opening the notebook](#opening-the-notebook).
 
 ---
 
