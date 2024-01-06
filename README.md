@@ -101,6 +101,26 @@ Here's an example of the links to look out for in the terminal window.
 3. Enjoy!
 
 ## Notes
+### Running specific kernels
+#### Running the SQLite Kernel without Python and the Python Kernel
+Runs the notebook with only the SQLite kernel loaded. 
+This will skip downloading the python dependencies and 
+building the Python environment.
+```sh
+: nix run .#lab-sqlite
+```
+
+#### Running the Python Kernel without the SQLite3 Kernel
+Runs the notebook with only the Python kernel loaded.
+This will download the Python dependencies and configure
+the Python environment and will not download or build
+the SQLite kernel.
+```sh
+: nix run .#lab-python
+```
+
+---
+
 ### Firefox Slowness
 __JupyterLab__ seems to have difficulty running on Firefox,
 with symptoms of being extremely slow and unresponsive.
