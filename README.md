@@ -1,7 +1,13 @@
 # gtfs_onboarding
 A Jupyter Notebook workspace for exploring GTFS data via SQLite3.
 
+
 ## Getting Started
+### Requirements
+- a [Nix](https://nixos.org/) installation [^nix-installer]
+	- (as of writing) must have the following `experimental-features`
+		- `flakes`
+		- `nix-command`
 ### (Very) Quick Start
 This method is great for quickly getting the notebook up and running
 with all data populated
@@ -19,7 +25,7 @@ Using nix, we can start the JupyterLab and notebook with a single command.
 > this command.
 
 ```
-nix run github:firestack/gtfs_onboarding.nix/feat/sqlite-kernel
+nix run github:firestack/gtfs_onboarding.nix#interactive-read-only
 ```
 
 This command shall download the repository into the nix store, then build the jupyter lab and kernels needed.
@@ -34,25 +40,32 @@ Then continue with the [section: opening the notebook](#opening-the-notebook).
 
 ### Local Quick Start with persistance (save and resume)
 1) Clone this repository
+	```sh
+	: git clone https://github.com/firestack/gtfs_onboarding.nix.git
+	```
 2) Enter the directory
+	```sh
+	: cd ./gtfs_onboarding.nix
+	```
 
 #### Direnv
-If using `direnv`, first run
-```
-direnv allow
-```
-To load the nesisary dependencies into your shell.
+3.
+	1. load the necessary dependencies into your shell using `direnv`
+		```
+		: direnv allow
+		```
 
-Then run
-```
-jupyter-lab
-```
-to start the notebook server.
+	4. Then run the `jupyter-lab` command to start the notebook server.
+		```sh
+		: jupyter-lab
+		```
 
-#### Nix run
-```
-nix run .#lab
-```
+#### Nix Flakes
+3.
+	1. Run via nix flakes
+		```sh
+		: nix run
+		```
 
 ---
 
@@ -88,3 +101,5 @@ Here's an example of the links to look out for in the terminal window.
 ### Firefox Slowness
 JupyterLab seems to have difficulty running on Firefox, with symptoms of being extremely slow and unresponsive. Using Safari or Chrome have been
 a stable alternative for running the notebook, as of writing.
+
+[^nix-installer]: 	[Nix installer which enables flakes and nix-command by default](https://github.com/DeterminateSystems/nix-installer/)
