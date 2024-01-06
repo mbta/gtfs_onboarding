@@ -8,7 +8,7 @@ Configured and provided via [Nix][nix].
 ## Getting Started
 ### Requirements
 - a [Nix](https://nixos.org/) installation [^nix-installer]
-	- (as of writing) must have the following `experimental-features`
+	- must have the following `experimental-features`[^at-time-of-writing]
 		- `flakes`
 		- `nix-command`
 ### (Very) Quick Start
@@ -106,3 +106,4 @@ JupyterLab seems to have difficulty running on Firefox, with symptoms of being e
 a stable alternative for running the notebook, as of writing.
 
 [^nix-installer]: 	[Nix installer which enables flakes and nix-command by default](https://github.com/DeterminateSystems/nix-installer/)
+[^at-time-of-writing]: At time of writing.
