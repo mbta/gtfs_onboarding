@@ -12,13 +12,15 @@ Configured and provided via [Nix][nix].
 		- `flakes`
 		- `nix-command`
 ### (Very) Quick Start
-This method is great for quickly getting the notebook up and running
-with all data populated
 
 Using nix, we can start the JupyterLab and notebook with a single command. 
 
 > [!WARNING]
 > Using this method, you __cannot__ save your progress.
+>
+> This method is great for quickly getting the notebook up
+> and running with all data populated, but not great for
+> learners who wish to save their progress.
 >
 > This is because the notebook will be downloaded to the
 > nix store and will be read-only.
