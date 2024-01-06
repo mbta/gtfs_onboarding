@@ -90,11 +90,11 @@ authentication token
 
 Here's an example of the links to look out for in the terminal window.
 > ```
->	To access the server, open this file in a browser:
->		file:///.jupyter/runtime/jpserver-00000-open.html
->	Or copy and paste one of these URLs:
->		http://localhost:8888/lab?token=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
->		http://127.0.0.1:8888/lab?token=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+> To access the server, open this file in a browser:
+> 	file:///.jupyter/runtime/jpserver-00000-open.html
+> Or copy and paste one of these URLs:
+> 	http://localhost:8888/lab?token=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+> 	http://127.0.0.1:8888/lab?token=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 > ```
 
 2. Open file `GTFS Onboarding.ipynb`
