@@ -107,6 +107,7 @@ a stable alternative for running the notebook, as of writing.
 ---
 
 [nix]: https://nixos.org/
+[GTFS]: https://gtfs.org/
 
 [^nix-installer]: 	[Nix installer which enables flakes and nix-command by default](https://github.com/DeterminateSystems/nix-installer/)
 [^at-time-of-writing]: At time of writing.
