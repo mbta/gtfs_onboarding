@@ -121,6 +121,32 @@ the SQLite kernel.
 
 ---
 
+### Loading different GTFS feeds
+The [gtfs.nix file](./gtfs.nix) contains content addressed[^at-time-of-writing]
+definitions for other [GTFS][GTFS] feeds which can be loaded.
+These can be loaded into the environment using the [Local start method](#local-quick-start-with-persistance-save-and-resume) and 
+building the relevant GTFS database.
+
+For example, the command
+```sh
+: nix build -o mbta-20201002.db .#mbta-gtfs-20201002
+# OR
+: nix build -o mbta-20201002.db github:firestack/gtfs_onboarding.nix#mbta-gtfs-20201002
+```
+will download the archived GTFS feed and build a SQLite3
+database, and then link it to a file in your working 
+directory named `mbta-20201002.db`.
+
+Then, in the notebook, you'll need to change the name of the
+database passed to the open command.
+
+Alternatively, you can build the database and overwrite the `feed.db` link:
+```sh
+: nix build -o feed.db .#mbta-gtfs-20201002
+```
+
+---
+
 ### Firefox Slowness
 __JupyterLab__ seems to have difficulty running on Firefox,
 with symptoms of being extremely slow and unresponsive.
