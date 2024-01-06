@@ -7,7 +7,7 @@ Configured and provided via [Nix][nix].
 
 ## Getting Started
 ### Requirements
-- a [Nix](https://nixos.org/) installation [^nix-installer]
+- a [Nix][nix] installation [^nix-installer]
 	- must have the following `experimental-features`[^at-time-of-writing]
 		- `flakes`
 		- `nix-command`
@@ -104,6 +104,9 @@ Here's an example of the links to look out for in the terminal window.
 ### Firefox Slowness
 JupyterLab seems to have difficulty running on Firefox, with symptoms of being extremely slow and unresponsive. Using Safari or Chrome have been
 a stable alternative for running the notebook, as of writing.
+---
+
+[nix]: https://nixos.org/
 
 [^nix-installer]: 	[Nix installer which enables flakes and nix-command by default](https://github.com/DeterminateSystems/nix-installer/)
 [^at-time-of-writing]: At time of writing.
