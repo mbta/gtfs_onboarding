@@ -11,10 +11,8 @@ Configured and provided via [Nix][nix].
 	- must have the following `experimental-features`[^at-time-of-writing]
 		- `flakes`
 		- `nix-command`
+
 ### (Very) Quick Start
-
-Using nix, we can start the JupyterLab and notebook with a single command. 
-
 > [!WARNING]
 > Using this method, you __cannot__ save your progress.
 >
@@ -28,11 +26,13 @@ Using nix, we can start the JupyterLab and notebook with a single command.
 > This is because the notebook will be downloaded to the
 > nix store and will be read-only.
 
-```
-nix run github:firestack/gtfs_onboarding.nix#interactive-read-only
-```
+Using [Nix][nix], we can start [JupyterLab](https://jupyter.org/)
+and load the notebook with a single command. 
 
 
+```sh
+: nix run github:firestack/gtfs_onboarding.nix#interactive-read-only
+```
 
 This command does the following:
 1. Runs the nix flake app named `interactive-read-only` which
