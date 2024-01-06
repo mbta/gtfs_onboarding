@@ -5,6 +5,19 @@ workspace for exploring [GTFS][GTFS] data via
 Configured and provided via [Nix][nix].
 
 
+## Table of Contents
+1. [Getting Started](#getting-started)
+	1. [Requirements](#requirements)
+	2. [(Very) Quick Start](#very-quick-start)
+	3. [Local Quick Start with persistance (save and resume)](#local-quick-start-with-persistance-save-and-resume)
+	4. [Opening the notebook](#opening-the-notebook)
+2. [Notes](#notes)
+	1. [Running specific kernels](#running-specific-kernels)
+		1. [Running the SQLite Kernel without Python and the Python Kernel](#running-the-sqlite-kernel-without-python-and-the-python-kernel)
+		2. [Running the Python Kernel without the SQLite3 Kernel](#running-the-python-kernel-without-the-sqlite3-kernel)
+	2. [Loading different GTFS feeds](#loading-different-gtfs-feeds)
+	3. [Firefox Slowness](#firefox-slowness)
+
 ## Getting Started
 ### Requirements
 - a [Nix][nix] installation [^nix-installer]
