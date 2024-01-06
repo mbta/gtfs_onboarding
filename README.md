@@ -1,5 +1,8 @@
 # gtfs_onboarding
-A Jupyter Notebook workspace for exploring GTFS data via SQLite3.
+A [Jupyter Notebook](https://docs.jupyter.org/en/latest/#what-is-a-notebook)
+workspace for exploring [GTFS][GTFS] data via 
+[SQLite3](https://www.sqlite.org/index.html) and optionally [Python](https://www.python.org/).
+Configured and provided via [Nix][nix].
 
 
 ## Getting Started
