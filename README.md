@@ -18,6 +18,9 @@ Using nix, we can start the JupyterLab and notebook with a single command.
 > [!WARNING]
 > Using this method, you __cannot__ save your progress.
 >
+> Use the [Local Quick Start](#local-quick-start-with-persistance-save-and-resume)
+> method if you wish to save your progress.
+>
 > This method is great for quickly getting the notebook up
 > and running with all data populated, but not great for
 > learners who wish to save their progress.
