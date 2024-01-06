@@ -22,10 +22,6 @@ Using nix, we can start the JupyterLab and notebook with a single command.
 >
 > This is because the notebook will be downloaded to the
 > nix store and will be read-only.
-> 
-> You can save your progress to a file outside the nix store,
-> but changes will not be picked up by subsequent runs of
-> this command.
 
 ```
 nix run github:firestack/gtfs_onboarding.nix#interactive-read-only
