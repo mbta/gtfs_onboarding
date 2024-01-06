@@ -102,8 +102,11 @@ Here's an example of the links to look out for in the terminal window.
 
 ## Notes
 ### Firefox Slowness
-JupyterLab seems to have difficulty running on Firefox, with symptoms of being extremely slow and unresponsive. Using Safari or Chrome have been
-a stable alternative for running the notebook, as of writing.
+__JupyterLab__ seems to have difficulty running on Firefox,
+with symptoms of being extremely slow and unresponsive.
+Using Safari or Chrome have been a stable alternative for
+running the notebooks[^at-time-of-writing].
+
 ---
 
 [nix]: https://nixos.org/
