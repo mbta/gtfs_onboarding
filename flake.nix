@@ -30,6 +30,7 @@
 		flake-parts.lib.mkFlake { inherit inputs; } {
 			imports = [
 				devshell.flakeModule
+				./gtfs.nix
 			];
 
 			systems = [
