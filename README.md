@@ -72,6 +72,13 @@ This command does the following:
 	: cd ./gtfs_onboarding.nix
 	```
 
+#### Nix Flakes
+3.
+	1. Run via nix flakes
+		```sh
+		: nix run
+		```
+
 #### Direnv
 3.
 	1. load the necessary dependencies into your shell using `direnv`
@@ -82,13 +89,6 @@ This command does the following:
 	4. Then run the `jupyter-lab` command to start the notebook server.
 		```sh
 		: jupyter-lab
-		```
-
-#### Nix Flakes
-3.
-	1. Run via nix flakes
-		```sh
-		: nix run
 		```
 
 ---
