@@ -1,5 +1,13 @@
+# Nix Files
+result
+
+# Direnv
 /.direnv/
+
+# Jupyter Notebooks
 .ipynb_checkpoints
 .jupyter
+
+# Transient GTFS data
 feed
 feed.db
