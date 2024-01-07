@@ -22,6 +22,10 @@
 	inputs.jupyterWith.inputs.nixpkgs.follows = "/nixpkgs";
 	inputs.jupyterWith.inputs.nixpkgs-stable.follows = "/nixpkgs";
 
+	inputs.sqlite-notebook.url = "github:firestack/sqlite-notebook/feat/jupyter-with-module";
+	inputs.sqlite-notebook.inputs.nixpkgs.follows = "/nixpkgs";
+	inputs.sqlite-notebook.inputs.flake-utils.follows = "/jupyterWith/flake-utils";
+
 	outputs = inputs@{ self, flake-parts, jupyterWith, devshell, ... }:
 		flake-parts.lib.mkFlake { inherit inputs; } {
 			imports = [
@@ -37,27 +41,60 @@
 			];
 
 			perSystem = { system, pkgs, self', inputs', ... }: {
-				packages.default = self'.packages.jupyterlab;
+				packages.default = self'.packages.lab;
 
 				devshells.default = {
 					packages = [
+						self'.packages.python
+
 						pkgs.sqlite
-						self'.packages.jupyterlab
 
 						pkgs.nil
 					];
 				};
 
-				packages.jupyterlab = self'.legacyPackages.jupyterlabconfig.config.build;
+				packages.lab = self'.legacyPackages.jupyterlab.config.build;
+				packages.lab-sqlite = self'.legacyPackages.jupyterlab-sqlite.config.build;
+				packages.lab-python = self'.legacyPackages.jupyterlab-python.config.build;
 
-				legacyPackages.jupyterlabconfig = inputs.jupyterWith.lib.${system}.mkJupyterlabEval ({...}: {
-					nixpkgs = pkgs;
+				legacyPackages.jupyterWithModules.pkgs = { nixpkgs = pkgs; };
 
+				legacyPackages.jupyterWithModules.python = {
 					kernel.python.default = {
 						enable = true;
 						displayName = "Python3 Kernel";
 						env = self'.packages.python;
 					};
+				};
+
+				legacyPackages.jupyterWithModules.sqlite = {
+					imports = [
+						inputs.sqlite-notebook.jupyterWithModules.${system}.default
+					];
+
+					kernel.sqlite.default.enable = true;
+				};
+
+				legacyPackages.jupyterlab = inputs.jupyterWith.lib.${system}.mkJupyterlabEval ({
+					imports = [
+						self'.legacyPackages.jupyterWithModules.pkgs
+						self'.legacyPackages.jupyterWithModules.python
+						self'.legacyPackages.jupyterWithModules.sqlite
+					];
+				});
+
+				legacyPackages.jupyterlab-python = inputs.jupyterWith.lib.${system}.mkJupyterlabEval ({
+					imports = [
+						self'.legacyPackages.jupyterWithModules.pkgs
+						self'.legacyPackages.jupyterWithModules.python
+					];
+				});
+
+				legacyPackages.jupyterlab-sqlite = inputs.jupyterWith.lib.${system}.mkJupyterlabEval ({
+					imports = [
+						self'.legacyPackages.jupyterWithModules.pkgs
+						self'.legacyPackages.jupyterWithModules.sqlite
+					];
 				});
 
 				packages.python = pkgs.python3.withPackages (ps:

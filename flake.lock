@@ -550,7 +550,8 @@
         "devshell": "devshell",
         "flake-parts": "flake-parts",
         "jupyterWith": "jupyterWith",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "sqlite-notebook": "sqlite-notebook"
       }
     },
     "rust-overlay": {
@@ -575,6 +576,31 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "sqlite-notebook": {
+      "inputs": {
+        "flake-utils": [
+          "jupyterWith",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1704333944,
+        "narHash": "sha256-ZaWIufRZsYS+H2Sext/evb42U3304/8IweTpLNktSEc=",
+        "owner": "firestack",
+        "repo": "sqlite-notebook",
+        "rev": "e05756b51b810999ce22c5d9d9d48aea849fa99c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "firestack",
+        "ref": "feat/jupyter-with-module",
+        "repo": "sqlite-notebook",
         "type": "github"
       }
     },
