@@ -118,7 +118,8 @@ Here's an example of the links to look out for in the terminal window.
 > 	http://127.0.0.1:8888/lab?token=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 > ```
 
-2. Open file `GTFS Onboarding.ipynb`
+2. Open file `GTFS Onboarding.sqlite3.ipynb`
+	1. For a Python notebook, you can also open `GTFS Onboarding.python.ipynb`
 3. Enjoy!
 
 ## Notes
