@@ -136,6 +136,14 @@
 
 						ps.click
 					]);
+
+				checks = {
+					defaultPackage = self'.packages.default;
+					defaultDevshell = self'.devShells.default;
+
+					inherit (self'.packages)
+						python lab lab-sqlite lab-python;
+				};
 			};
 		};
 }
